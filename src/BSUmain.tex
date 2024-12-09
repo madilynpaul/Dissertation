@@ -1,0 +1,144 @@
+% if you don't want two-sided printing, erase the twoside option
+% from the following line:
+\documentclass[12pt]{report}
+
+% custom file for BSU style by KvW, 2006:
+\usepackage{BSUthesis}
+
+\usepackage{amssymb}
+\usepackage{nomencl}
+\makenomenclature
+
+%% This code creates the groups
+% -----------------------------------------
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{S}{Symbols}{%
+  \ifstrequal{#1}{A}{Abbreviations}{%
+  \ifstrequal{#1}{O}{Other symbols}{}}}%
+]}
+% -----------------------------------------
+
+% \usepackage{acro}
+% probably a good idea for the nomenclature entries:
+% \acsetup{first-style=short}
+\usepackage{siunitx}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+
+
+\newcommand\inputfile[1]{%
+    \InputIfFileExists{#1}{}{\typeout{No file #1.}}%
+} % this command keep latexmk from erroring when \input is missing
+
+\newcommand{\todo}[1]{\textcolor{red}{#1 -- TODO}}
+\newcommand{\ej}[1]{\textcolor{red}{EJ: #1}}
+%\newcommand\tab[1][1cm]{\hspace*{#1}}
+% For abbreviations
+% For symbols and nomenclature 
+\makenomenclature
+\input{src/abbrev}
+\makeglossaries
+
+\newcommand{\esp}{\texttt{Espaloma}} 
+\newcommand{\espff}{\texttt{ESP-UA}} 
+\newcommand{\oplsff}{\texttt{OPLS-UA}} 
+
+\begin{document}
+
+%------------------------------------------------------------------------------
+% bunch of fields to enter:
+%------------------------------------------------------------------------------
+\author{Madilyn E. Paul}
+%------------------------------------------------------------------------------
+%\degree{Doctor of Philosophy}
+\degreetype{Doctor of Philosophy}
+%------------------------------------------------------------------------------
+\discipline{Materials Science and Engineering}
+%------------------------------------------------------------------------------
+\title{Development and application of computational tools for organic molecular structure prediction from small molecule crystal structure determination to polymer persistence length.} % use correct capitalization
+%------------------------------------------------------------------------------
+\advisor{Eric Jankowski}{Ph.D.}
+\committeeMemberA{Scott Phillips}{Ph.D.}
+\committeeMemberB{Oliviero Andreussi}{Ph.D.}
+\committeeMemberC{Frank Willmore}{Ph.D.} 
+%------------------------------------------------------------------------------
+\dean{Scott Lowe}{Dean of the Graduate College}
+%------------------------------------------------------------------------------
+% insert month and year of your thesis, only:
+\date{November 2024}
+\oralexamdate{November 21, 2024}
+%------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+\maketitle
+%------------------------------------------------------------------------------
+\makecopyright
+%------------------------------------------------------------------------------
+\submittalsheet
+%------------------------------------------------------------------------------
+\setcounter{page}{4}
+\input dedication
+%------------------------------------------------------------------------------
+\input acknowledgment
+%------------------------------------------------------------------------------
+%\input autobiographics
+%------------------------------------------------------------------------------
+\input abstract
+%------------------------------------------------------------------------------
+% \cleardoublepage
+\tableofcontents
+%------------------------------------------------------------------------------
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of tables} 
+\listoftables
+%------------------------------------------------------------------------------
+\cleardoublepage
+\addcontentsline{toc}{chapter}{List of figures} 
+\listoffigures
+%------------------------------------------------------------------------------
+% print abbreviations
+%\printglossary[title={List of abbreviations},type=\acronymtype]
+%------------------------------------------------------------------------------
+% print symbols
+\cleardoublepage% or \clearpage
+%\renewcommand{\nomname}{List of Abbreviations}
+%\markboth{\nomname}{\nomname}% maybe with \MakeUppercase
+%%
+\printnomenclature
+
+%------------------------------------------------------------------------------
+% start of main text (reset pagenumbers, etc.):
+%------------------------------------------------------------------------------
+\begintext
+
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter1}
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter2}
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter3}
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter4}
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter5}
+%------------------------------------------------------------------------------
+\input{src/chapters/Chapter6}
+%------------------------------------------------------------------------------
+% bibliography:
+% \cleardoublepage
+\addcontentsline{toc}{chapter}{References} 
+\bibliography{src/bibliography}
+\bibliographystyle{unsrt}
+%------------------------------------------------------------------------------
+% \cleardoublepage
+\addcontentsline{toc}{chapter}{Appendices}
+\appendix
+\input{src/appendices/Ch4_Appendix}
+\input{src/appendices/bondwalker}
+\input {src/appendices/Ch5_Appendix}
+%------------------------------------------------------------------------------
+
+\end{document}
